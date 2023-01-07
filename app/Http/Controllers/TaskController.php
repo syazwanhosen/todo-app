@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Todo;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
-class TodoController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return view('todo.index', ['todos' => Todo::all()]);
+        return view('tasks.index', ['tasks' => Task::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        return view('todo.create');
+        return view('tasks.create');
     }
 
     /**
@@ -35,11 +35,11 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $todo = new Todo();
-        $todo->description = $request->input('description');
-        $todo->save();
+        $task = new Task();
+        $task->description = $request->input('description');
+        $task->save();
 
-        return redirect()->route('todo.index');
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -50,7 +50,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('tasks.show', ['task' => Task::findOrFail($id)]);
     }
 
     /**
@@ -61,7 +61,8 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        return view('tasks.edit', ['task' => $task]);
     }
 
     /**
@@ -73,7 +74,11 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->description = $request->input('description');
+        $task->save();
+
+        return redirect()->route('tasks.show', ['task' => $task->id]);
     }
 
     /**
@@ -84,6 +89,9 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }
