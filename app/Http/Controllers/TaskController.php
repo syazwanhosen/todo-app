@@ -37,6 +37,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->description = $request->input('description');
+        $task->status = false;
         $task->save();
 
         return redirect()->route('tasks.index');
@@ -76,9 +77,12 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         $task->description = $request->input('description');
+        if ($request->filled('status')) {
+            $task->status = $request->status;
+        }
         $task->save();
 
-        return redirect()->route('tasks.show', ['task' => $task->id]);
+        return  redirect()->route('tasks.index');
     }
 
     /**

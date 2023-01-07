@@ -12,7 +12,6 @@
         <h2>Todo Application</h2>
     <ul>
         <li><a href="{{ route('home') }}">Home</a></li>
-        {{-- <li><a href="{{ route('contact') }}">Contact</a></li> --}}
         <li><a href="{{ route('tasks.index') }}">Task List</a></li>
         <li><a href="{{ route('tasks.create') }}">Add Task</a></li>
     </ul>

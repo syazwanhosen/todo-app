@@ -14,6 +14,11 @@
         <p  class="task-box" >
                 <a href="{{ route('tasks.show', ['task' => $task->id]) }}" >{{ $task->description }}</a>
 
+                @if ($task->status == "1")
+                  <p>Completed</p>
+                  @else
+                  <p>Pending</p>
+                @endif
             <a href="{{ route('tasks.edit', ['task' => $task->id]) }}">
                 Edit
             </a>
@@ -25,6 +30,31 @@
 
                             <input type="submit" value="Delete"/>
                         </form>
+
+                        @if ($task->status == "1")
+                            <form method="POST"
+                            action="{{ route('tasks.update', ['task' => $task->id]) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <input type="hidden" name="description" value="{{ old('description', $task->description) }}"/>
+                            <input name="status" type="hidden" id="status" value="0">
+                            <input type="submit" value="Change Status" />
+                        </form>
+                        @else
+                          <form method="POST"
+                            action="{{ route('tasks.update', ['task' => $task->id]) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <input type="hidden" name="description" value="{{ old('description', $task->description) }}"/>
+                            <input name="status" type="hidden" id="status" value="1">
+                            <input type="submit" value="Change Status" />
+                        </form>
+                        @endif
+            
+
+                        
                         
           
         </p>
