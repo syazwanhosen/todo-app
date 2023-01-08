@@ -23,6 +23,7 @@
     <form  method="POST" action="{{ route('tasks.store') }}">
         @csrf
          <input type="text" name="description" placeholder="Add task"/>
+          <input name="user_id" type="hidden" value={{ Auth::user()->id }}>
         <input type="submit" class="clear-btn" value="Confirm"/>
     </form>
 @endsection

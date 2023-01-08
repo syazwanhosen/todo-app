@@ -11,7 +11,10 @@
         </div>
       </div>
           @forelse ($tasks as $task)
-        <p  class="task-box" >
+          @if ($task->user_id == Auth::user()->id)
+          <p  class="task-box" >
+            
+        
                 <a href="{{ route('tasks.show', ['task' => $task->id]) }}" >{{ $task->description }}</a>
 
                 @if ($task->status == "1")
@@ -54,10 +57,8 @@
                         @endif
             
 
-                        
-                        
-          
-        </p>
+                      </p>
+                      @endif   
     @empty
         <p>No tasks yet!</p>
     @endforelse
