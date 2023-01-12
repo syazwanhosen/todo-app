@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('assets/css/layout.css') }}"/>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav>
-        <h2>Todo Application</h2>
+        <h2>i-Todo </h2>
     <ul>
          @guest
                             @if (Route::has('login'))

@@ -2,27 +2,50 @@
 @extends('components.layout')
 
 @section('content')
-    <div class="wrapper">
-      <div class="controls">
-        <div class="filters">
-          <span class="active" id="all">All</span>
-          <span id="pending">Pending</span>
-          <span id="completed">Completed</span>
-        </div>
-      </div>
-          @forelse ($tasks as $task)
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Tasks List') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+              
+ <table class="table">
+  <thead>
+    <tr>
+      <th scope="col" class="col-6 ">Description</th>
+      <th scope="col">Status</th>
+      <th scope="col" class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      @forelse ($tasks as $task)
+          
           @if ($task->user_id == Auth::user()->id)
-          <p  class="task-box" >
+          <tr>
+      <th scope="row" >
+
+          <p>
             
         
                 <a href="{{ route('tasks.show', ['task' => $task->id]) }}" >{{ $task->description }}</a>
+      <td >
 
                 @if ($task->status == "1")
-                  <p>Completed</p>
+                  <span class="badge bg-success">Completed</span>
                   @else
-                  <p>Pending</p>
+                  <span class="badge bg-warning">Pending</span>
                 @endif
-            <a href="{{ route('tasks.edit', ['task' => $task->id]) }}">
+      </td>
+      <td class="d-flex justify-content-end gap-1" >
+
+            <a href="{{ route('tasks.edit', ['task' => $task->id]) }}" class="btn btn-primary">
                 Edit
             </a>
 
@@ -31,8 +54,9 @@
                             @csrf
                             @method('DELETE')
 
-                            <input type="submit" value="Delete"/>
+                            <input type="submit" value="Delete"  class="btn btn-danger" />
                         </form>
+
 
                         @if ($task->status == "1")
                             <form method="POST"
@@ -42,7 +66,7 @@
 
                             <input type="hidden" name="description" value="{{ old('description', $task->description) }}"/>
                             <input name="status" type="hidden" id="status" value="0">
-                            <input type="submit" value="Change Status" />
+                            <input type="submit" value="Change Status" class="btn btn-dark" />
                         </form>
                         @else
                           <form method="POST"
@@ -52,16 +76,27 @@
 
                             <input type="hidden" name="description" value="{{ old('description', $task->description) }}"/>
                             <input name="status" type="hidden" id="status" value="1">
-                            <input type="submit" value="Change Status" />
+                            <input type="submit" value="Change Status" class="btn btn-dark" />
                         </form>
                         @endif
-            
+      </td>
 
                       </p>
+                      </th>
+                      </tr>
                       @endif   
     @empty
         <p>No tasks yet!</p>
     @endforelse
+  
+  </tbody>
+</table>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+  
 
  @endsection
